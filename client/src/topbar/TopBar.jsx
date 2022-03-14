@@ -45,14 +45,18 @@ export default function TopBar() {
             alt=""
           />
         ) : (
-          <>
-            <Link to="/login" className="link">
-              LOGIN
-            </Link>
-            <Link to="/register" className="link">
-              REGISTER
-            </Link>
-          </>
+          <ul className="topList">
+            <li className="topListItem">
+              <Link to="/login" className="link">
+                LOGIN
+              </Link>
+            </li>
+            <li className="topListItem">
+              <Link to="/register" className="link">
+                REGISTER
+              </Link>
+            </li>
+          </ul>
         )}
 
         <i className="topSearchIcon fas fa-search"></i>
