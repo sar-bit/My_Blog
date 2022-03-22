@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
+import axios from "axios";
 import "./singlepost.css";
 
-export default function singlePost() {
+export default function SinglePost() {
+  const location = useLocation();
+  const path = location.pathname.split("/")[2];
+  console.log(location,'location post')
+  const [post, setPost] = useState({});
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axios.get("/posts/" + path);
+      setPost(res.data);
+    };
+    getPost();
+  }, [path]);
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-        <img
-          src="https://images.unsplash.com/photo-1625472603513-413fb94f8b0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0NjkxNTQ0Nw&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080"
-          alt=""
-          className="singlePostImg"
-        />
+        {post.photo && (
+          <img src={post.photo} alt="" className="singlePostImg" />
+        )}
         <h1 className="singlePostTitle">
-          Post Title
+          {post.title}
           <div className="singlePostEdit">
             <i className="singlePostIcon fa-solid fa-pen-to-square"></i>
             <i className="singlePostIcon fa-solid fa-trash-can"></i>
@@ -19,27 +30,15 @@ export default function singlePost() {
         </h1>
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
-            Author: <b>Sarbita</b>
+            Author: 
+            <Link to={`/?user=${post.username}`} className="link"><b>{post.username}</b></Link>
+            
           </span>
-          <span className="singlePostDate">1 hour ago</span>
+          <span className="singlePostDate">
+            {new Date(post.createdAt).toDateString()}
+          </span>
         </div>
-        <p className="singlePostDescription">
-          Webpack is a module bundler (manages and loads independent modules).
-          It takes dependent modules and compiles them to a single (file)
-          bundle. You can use this bundle while developing apps using command
-          line or, by configuring it using webpack.config file. Babel is a
-          JavaScript compiler and transpiler. It is used to convert one source
-          code to other. Using this you will be able to use the new ES6 features
-          in your code where, babel converts it into plain old ES5 which can be
-          run on all browsers. Webpack is a module bundler (manages and loads
-          independent modules). It takes dependent modules and compiles them to
-          a single (file) bundle. You can use this bundle while developing apps
-          using command line or, by configuring it using webpack.config file.
-          Babel is a JavaScript compiler and transpiler. It is used to convert
-          one source code to other. Using this you will be able to use the new
-          ES6 features in your code where, babel converts it into plain old ES5
-          which can be run on all browsers.
-        </p>
+        <p className="singlePostDescription">{post.desc}</p>
       </div>
     </div>
   );
