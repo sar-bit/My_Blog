@@ -6,7 +6,6 @@ import "./singlepost.css";
 export default function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
-  console.log(location,'location post')
   const [post, setPost] = useState({});
   useEffect(() => {
     const getPost = async () => {
