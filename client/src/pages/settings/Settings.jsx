@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext, useReducer } from "react";
 import "./settings.css";
 import Sidebar from "../../sidebar/Sidebar";
+import { Context } from "../../context/Context";
+
 export default function Settings() {
+  const {user}= useContext(Context)
+  console.log(user,'user')
   return (
     <div className="settings">
       <div className="settingsWrapper">
@@ -13,7 +17,7 @@ export default function Settings() {
           <label>Profile Picture</label>
           <div className="settingsPP">
             <img
-              src="https://images.unsplash.com/photo-1644982647708-0b2cc3d910b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0Njk4Mjg5MQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080"
+              src={user.profilePic}
               alt=""
             />
             <label htmlFor="fileInput">
